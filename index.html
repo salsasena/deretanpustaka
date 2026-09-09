@@ -3,17 +3,81 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KlinikPustaka</title>
+<title>KlinikPustaka — Your Fiction Destination</title>
+<meta name="description" content="KlinikPustaka — temukan novel fiksi, hidden gem, dan cerita yang terasa seperti rumah.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header><a class="logo" href="#home">🌹 KlinikPustaka</a><nav><a href="#home">Home</a><a href="#about">About</a><a href="#best">Best Seller</a><a href="#recommend">Rekomendasi</a><a href="#genre">Genre</a><a href="#contact">Contact</a></nav><div class="actions"><button id="searchBtn">⌕</button><select id="language"><option value="id">ID</option><option value="en">EN</option></select><button id="cartBtn">🛒 <b id="cartCount">0</b></button></div></header>
-<main id="home"><section class="hero"><div><small>YOUR FICTION DESTINATION</small><h1 id="heroTitle">Cari duniamu,<br><em>temukan ceritamu.</em></h1><p id="heroText">Temukan novel fiksi, hidden gem, dan cerita yang terasa seperti rumah.</p><a class="btn" href="#best">Jelajahi Buku</a></div><img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=85" alt="Buku dan suasana membaca"></section>
-<section id="best"><small>CURATED FOR YOU</small><h2>Best Seller</h2><div class="controls"><button id="prev">←</button><button id="next">→</button></div><div id="slider" class="slider"></div></section>
-<section id="about" class="about"><div><small>ABOUT KLINIKPUSTAKA</small><h2>Satu tempat untuk <em>bertemu cerita.</em></h2></div><p>KlinikPustaka membantu pembaca menemukan buku fiksi yang tepat—dari romance, fantasy, mystery hingga hidden gem.</p></section>
-<section id="recommend"><small>EDITOR'S PICK</small><h2>Rekomendasi</h2><div class="grid"><article><span>01</span><h3>For the hopeless romantic</h3><p>Sweet, emotional, and impossible to put down.</p></article><article><span>02</span><h3>For the dreamer</h3><p>Magical worlds and stories that stay with you.</p></article><article><span>03</span><h3>For the curious</h3><p>Mystery, secrets, and unexpected twists.</p></article></div></section>
-<section id="genre"><small>EXPLORE</small><h2>Temukan Genre-mu</h2><div class="genres"><button>Romance ♡</button><button>Fantasy ✦</button><button>Mystery</button><button>Thriller</button><button>Horror</button><button>Slice of Life</button><button>Young Adult</button></div></section>
-<section id="searchPanel"><input id="searchInput" placeholder="Cari judul atau genre..."><div id="searchResults"></div></section></main>
-<aside id="cartPanel"><button id="closeCart">×</button><h2>Keranjang</h2><div id="cartItems"></div><strong>Total: <span id="cartTotal">Rp0</span></strong></aside>
-<footer id="contact"><div><h2>🌹 KlinikPustaka</h2><p>Cari duniamu disini.</p></div><div>Instagram<br><a href="https://instagram.com/sallsna" target="_blank" rel="noopener">@sallsna</a></div></footer><a class="instagram" href="https://instagram.com/sallsna" target="_blank" rel="noopener">◎ @sallsna</a><script src="script.js"></script></body></html>
+<header>
+  <a class="logo" href="#home">🌹 KlinikPustaka</a>
+  <nav>
+    <a href="#home">Home</a><a href="#about">About</a><a href="#best">Best Seller</a>
+    <a href="#recommend">Rekomendasi</a><a href="#genre">Genre</a><a href="#contact">Contact</a>
+  </nav>
+  <div class="actions">
+    <button id="searchBtn" aria-label="Search">⌕</button>
+    <select id="language" aria-label="Language"><option value="id">ID</option><option value="en">EN</option></select>
+    <button id="cartBtn" aria-label="Cart">🛒 <b id="cartCount">0</b></button>
+  </div>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div class="hero-copy">
+    <small>YOUR FICTION DESTINATION</small>
+    <h1 id="heroTitle">Cari duniamu,<br><em>temukan ceritamu.</em></h1>
+    <p id="heroText">Temukan novel fiksi, hidden gem, dan cerita yang terasa seperti rumah.</p>
+    <div class="hero-actions"><a class="btn" href="#best">Jelajahi Buku</a><a class="text-link" href="#recommend">Lihat rekomendasi →</a></div>
+    <div class="mini-stats"><span><b>05</b> curated books</span><span><b>♡</b> reader picks</span><span><b>24/7</b> book mood</span></div>
+  </div>
+  <div class="hero-visual"><img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=85" alt="Buku dan suasana membaca"></div>
+</section>
+
+<section id="best">
+  <div class="section-head"><div><small>CURATED FOR YOU</small><h2>Best <em>Seller</em></h2></div>
+  <div class="controls"><button id="prev">←</button><button id="next">→</button></div></div>
+  <div id="slider" class="slider"></div>
+</section>
+
+<section id="about" class="about">
+  <div><small>ABOUT KLINIKPUSTAKA</small><h2>Satu tempat untuk <em>bertemu cerita.</em></h2></div>
+  <div><p>KlinikPustaka membantu pembaca menemukan buku fiksi yang tepat—dari romance, fantasy, mystery hingga hidden gem.</p><div class="about-note">“A good book doesn't just tell a story. It gives you somewhere to go.”</div></div>
+</section>
+
+<section id="recommend">
+  <small>EDITOR'S PICK</small><h2>Rekomendasi <em>untukmu</em></h2>
+  <div class="grid">
+    <article><span>01</span><h3>For the hopeless romantic</h3><p>Sweet, emotional, and impossible to put down.</p><a href="#best">Explore romance →</a></article>
+    <article><span>02</span><h3>For the dreamer</h3><p>Magical worlds and stories that stay with you.</p><a href="#best">Enter the fantasy →</a></article>
+    <article><span>03</span><h3>For the curious</h3><p>Mystery, secrets, and unexpected twists.</p><a href="#best">Find the mystery →</a></article>
+  </div>
+</section>
+
+<section id="genre">
+  <small>EXPLORE</small><h2>Temukan <em>Genre-mu</em></h2>
+  <div class="genres">
+    <button data-genre="Romance">Romance ♡</button><button data-genre="Fantasy">Fantasy ✦</button>
+    <button data-genre="Mystery">Mystery</button><button data-genre="Thriller">Thriller</button>
+    <button data-genre="Horror">Horror</button><button data-genre="Classic">Classic</button><button data-genre="Young Adult">Young Adult</button>
+  </div>
+</section>
+
+<section id="searchPanel"><div class="search-title"><small>SEARCH THE SHELF</small><h2>Find your next <em>read.</em></h2></div>
+<input id="searchInput" placeholder="Cari judul atau genre..." autocomplete="off"><div id="searchResults"></div></section>
+</main>
+
+<aside id="cartPanel">
+  <button id="closeCart" class="close">×</button><small>YOUR BOOK BAG</small><h2>Keranjang</h2>
+  <div id="cartItems"></div><div class="cart-bottom"><strong>Total: <span id="cartTotal">Rp0</span></strong><button id="checkoutBtn" class="buy">Pesan via WhatsApp</button></div>
+</aside>
+
+<footer id="contact">
+  <div class="footer-brand"><h2>🌹 KlinikPustaka</h2><p>Cari duniamu, temukan cerita yang terasa seperti rumah.</p></div>
+  <div><small>CONTACT</small><h3>Let's talk books.</h3><a href="https://instagram.com/sallsna" target="_blank" rel="noopener">@sallsna</a><br><a href="mailto:hello@klinikpustaka.com">hello@klinikpustaka.com</a></div>
+  <div><small>ORDER</small><h3>Ready for your next read?</h3><a class="footer-btn" href="https://wa.me/6281234567890?text=Halo%20KlinikPustaka%2C%20saya%20ingin%20memesan%20buku." target="_blank" rel="noopener">Order via WhatsApp ↗</a></div>
+</footer>
+<a class="instagram" href="https://instagram.com/sallsna" target="_blank" rel="noopener">◎ @sallsna</a>
+<div id="toast"></div>
+<script src="script.js"></script>
+</body></html>

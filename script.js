@@ -1,1 +1,62 @@
-const books=[['The Secret Garden','Classic','89000','https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=500&q=80'],['Better Than The Movies','Romance','119000','https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=500&q=80'],['The Love Hypothesis','Romance','125000','https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=500&q=80'],['The Night Circus','Fantasy','139000','https://images.unsplash.com/photo-1526243741027-444d633d7365?auto=format&fit=crop&w=500&q=80'],['The Silent Patient','Mystery','129000','https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=500&q=80']];const slider=document.getElementById('slider');let cart=JSON.parse(localStorage.getItem('kpCart')||'[]');slider.innerHTML=books.map((b,n)=>`<article class="card"><img class="cover" src="${b[3]}" alt="${b[0]}" loading="lazy"><h3>${b[0]}</h3><p>${b[1]} · ⭐4.9</p><b>Rp${(+b[2]).toLocaleString('id-ID')}</b><br><button class="buy" onclick="add(${n})">Tambah ke Keranjang</button></article>`).join('');next.onclick=()=>slider.scrollBy({left:260,behavior:'smooth'});prev.onclick=()=>slider.scrollBy({left:-260,behavior:'smooth'});setInterval(()=>next.click(),4500);function add(n){cart.push(books[n]);localStorage.setItem('kpCart',JSON.stringify(cart));update()}function update(){cartCount.textContent=cart.length;cartItems.innerHTML=cart.map((b,n)=>`<div class="cartrow">${b[0]} <button onclick="removeItem(${n})">×</button></div>`).join('')||'<p>Belum ada buku.</p>';cartTotal.textContent='Rp'+cart.reduce((s,b)=>s+ +b[2],0).toLocaleString('id-ID')}function removeItem(n){cart.splice(n,1);localStorage.setItem('kpCart',JSON.stringify(cart));update()}update();cartBtn.onclick=()=>cartPanel.classList.add('open');closeCart.onclick=()=>cartPanel.classList.remove('open');searchBtn.onclick=()=>{searchPanel.classList.toggle('open');searchInput.focus()};searchInput.oninput=e=>{let q=e.target.value.toLowerCase();searchResults.innerHTML=books.filter(b=>b.join(' ').toLowerCase().includes(q)).map(b=>`<div class="result"><b>${b[0]}</b> — ${b[1]} — Rp${(+b[2]).toLocaleString('id-ID')}</div>`).join('')||'Tidak ditemukan.'};language.onchange=e=>{heroText.textContent=e.target.value==='en'?'Discover fiction, hidden gems, and stories that feel like home.':'Temukan novel fiksi, hidden gem, dan cerita yang terasa seperti rumah.';heroTitle.innerHTML=e.target.value==='en'?'Find your world,<br><em>find your story.</em>':'Cari duniamu,<br><em>temukan ceritamu.</em>'}
+const books=[
+['The Secret Garden','Classic','89000','https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=500&q=80'],
+['Better Than The Movies','Romance','119000','https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=500&q=80'],
+['The Love Hypothesis','Romance','125000','https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=500&q=80'],
+['The Night Circus','Fantasy','139000','https://images.unsplash.com/photo-1526243741027-444d633d7365?auto=format&fit=crop&w=500&q=80'],
+['The Silent Patient','Mystery','129000','https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=500&q=80']
+];
+
+const $=id=>document.getElementById(id);
+const slider=$('slider'); let cart=JSON.parse(localStorage.getItem('kpCart')||'[]');
+
+function renderBooks(list=books){
+ slider.innerHTML=list.map((b,n)=>`<article class="card"><img class="cover" src="${b[3]}" alt="${b[0]}" loading="lazy"><h3>${b[0]}</h3><p>${b[1]} · ⭐ 4.9</p><span class="price"><b>Rp${(+b[2]).toLocaleString('id-ID')}</b></span><button class="buy" onclick="add(${books.indexOf(b)})">Tambah ke Keranjang</button></article>`).join('');
+}
+renderBooks();
+
+$('next').onclick=()=>slider.scrollBy({left:260,behavior:'smooth'});
+$('prev').onclick=()=>slider.scrollBy({left:-260,behavior:'smooth'});
+let auto=setInterval(()=>$('next').click(),4500);
+slider.addEventListener('mouseenter',()=>clearInterval(auto));
+slider.addEventListener('mouseleave',()=>auto=setInterval(()=>$('next').click(),4500));
+
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+function add(n){cart.push(books[n]);save();update();toast('♡ Buku ditambahkan ke keranjang');}
+function save(){localStorage.setItem('kpCart',JSON.stringify(cart))}
+function update(){
+ $('cartCount').textContent=cart.length;
+ $('cartItems').innerHTML=cart.map((b,n)=>`<div class="cartrow"><b>${b[0]}</b><span class="qty">${b[1]} · Rp${(+b[2]).toLocaleString('id-ID')}</span><button onclick="removeItem(${n})">×</button></div>`).join('')||'<p>Belum ada buku. Yuk cari cerita baru ♡</p>';
+ $('cartTotal').textContent='Rp'+cart.reduce((s,b)=>s+ +b[2],0).toLocaleString('id-ID');
+}
+function removeItem(n){cart.splice(n,1);save();update();toast('Buku dihapus');}
+update();
+
+$('cartBtn').onclick=()=>{$('cartPanel').classList.add('open');document.body.style.overflow='hidden'};
+$('closeCart').onclick=()=>{$('cartPanel').classList.remove('open');document.body.style.overflow=''};
+$('searchBtn').onclick=()=>{$('searchPanel').classList.toggle('open');if($('searchPanel').classList.contains('open')){$('searchPanel').scrollIntoView({behavior:'smooth'});setTimeout(()=>$('searchInput').focus(),400)}};
+
+$('searchInput').oninput=e=>{
+ const q=e.target.value.toLowerCase().trim();
+ const results=books.filter(b=>b.join(' ').toLowerCase().includes(q));
+ $('searchResults').innerHTML=q?results.map(b=>`<div class="result"><b>${b[0]}</b> — ${b[1]} — Rp${(+b[2]).toLocaleString('id-ID')}</div>`).join('')||'<p>Tidak ditemukan. Coba genre atau judul lain ♡</p>':'';
+};
+
+document.querySelectorAll('.genres button').forEach(btn=>btn.onclick=()=>{
+ document.querySelectorAll('.genres button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
+ const g=btn.dataset.genre; const filtered=books.filter(b=>b[1].toLowerCase()===g.toLowerCase());
+ renderBooks(filtered.length?filtered:books); $('best').scrollIntoView({behavior:'smooth'}); toast(filtered.length?`Genre ${g}`:`Belum ada koleksi ${g}, coba yang lain ♡`);
+});
+
+$('language').onchange=e=>{
+ const en=e.target.value==='en';
+ $('heroText').textContent=en?'Discover fiction, hidden gems, and stories that feel like home.':'Temukan novel fiksi, hidden gem, dan cerita yang terasa seperti rumah.';
+ $('heroTitle').innerHTML=en?'Find your world,<br><em>find your story.</em>':'Cari duniamu,<br><em>temukan ceritamu.</em>';
+};
+
+$('checkoutBtn').onclick=()=>{
+ if(!cart.length){toast('Keranjang masih kosong ♡');return}
+ const items=cart.map(b=>`• ${b[0]} — Rp${(+b[2]).toLocaleString('id-ID')}`).join('%0A');
+ const total=cart.reduce((s,b)=>s+ +b[2],0).toLocaleString('id-ID');
+ const url=`https://wa.me/6281234567890?text=Halo%20KlinikPustaka%2C%20saya%20ingin%20memesan%3A%0A${items}%0A%0ATotal%3A%20Rp${total}`;
+ window.open(url,'_blank');
+};

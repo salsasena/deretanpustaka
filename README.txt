@@ -1,6 +1,10 @@
-KlinikPustaka — Unsplash Image Version
-- HTML/CSS/JS
-- 5 hotlinked Unsplash image URLs
-- Slider, search, ID/EN, cart localStorage
-- Instagram @sallsna
-Catatan: gambar di-hotlink dari Unsplash. Periksa kembali ketentuan lisensi/atribusi Unsplash dan hak atas isi foto sebelum deployment komersial.
+KlinikPustaka V2
+Upload these files to the root of your GitHub Pages repository:
+- index.html
+- style.css
+- script.js
+- favicon.svg
+
+Notes:
+- Replace the placeholder WhatsApp number 6281234567890 in index.html and script.js with the real order number if needed.
+- Instagram remains @sallsna.
