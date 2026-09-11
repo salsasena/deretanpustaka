@@ -1,19 +1,216 @@
-const books=[
- ['Kita Pergi Hari Ini','Slice of Life','89000','images/Kita_Pergi_Hari_Ini.jpg'],
- ['Perempuan di Titik Nol','Classic','119000','images/Perempuan_di_Titik_Nol.jpg'],
- ['Hello, Cello!','Romance','125000','images/Hello_Cello.jpg'],
- ['Autumn in Paris','Romance','139000','images/Autumn_in_Paris.jpg'],
- ['Surat Untuk Jenaka','Romance','129000','images/Surat_Untuk_Jenaka.jpg'],
- ['Cantik Itu Luka','Classic','149000','images/Cantik_Itu_Luka.jpg']
+const books = [
+  ['Kita Pergi Hari Ini', 'Slice of Life', '89000', 'images/Kita_Pergi_Hari_Ini.jpg'],
+  ['Perempuan di Titik Nol', 'Classic', '119000', 'images/Perempuan_di_Titik_Nol.jpg'],
+  ['Hello, Cello!', 'Romance', '125000', 'images/Hello_Cello.jpg'],
+  ['Autumn in Paris', 'Romance', '139000', 'images/Autumn_in_Paris.jpg'],
+  ['Surat Untuk Jenaka', 'Romance', '129000', 'images/Surat_Untuk_Jenaka.jpg'],
+  ['Cantik Itu Luka', 'Classic', '149000', 'images/Cantik_Itu_Luka.jpg']
 ];
-const $=id=>document.getElementById(id); const slider=$('slider'); let cart=JSON.parse(localStorage.getItem('kpCart')||'[]');
-function renderBooks(list=books){slider.innerHTML=list.map((b,n)=>`<article class="card"><img class="cover" src="${b[3]}" alt="${b[0]}" loading="lazy"><h3>${b[0]}</h3><p>${b[1]} · ⭐ 4.9</p><span class="price"><b>Rp${(+b[2]).toLocaleString('id-ID')}</b></span><button class="buy" onclick="add(${books.indexOf(b)})">Tambah ke Keranjang</button></article>`).join('');}
-renderBooks(); $('next').onclick=()=>slider.scrollBy({left:260,behavior:'smooth'}); $('prev').onclick=()=>slider.scrollBy({left:-260,behavior:'smooth'}); let auto=setInterval(()=>$('next').click(),4500); slider.addEventListener('mouseenter',()=>clearInterval(auto)); slider.addEventListener('mouseleave',()=>auto=setInterval(()=>$('next').click(),4500));
-function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)} function add(n){cart.push(books[n]);save();update();toast('♡ Buku ditambahkan ke keranjang');} function save(){localStorage.setItem('kpCart',JSON.stringify(cart))}
-function update(){$('cartCount').textContent=cart.length;$('cartItems').innerHTML=cart.map((b,n)=>`<div class="cartrow"><b>${b[0]}</b><span class="qty">${b[1]} · Rp${(+b[2]).toLocaleString('id-ID')}</span><button onclick="removeItem(${n})">×</button></div>`).join('')||'<p>Belum ada buku. Yuk cari cerita baru ♡</p>';$('cartTotal').textContent='Rp'+cart.reduce((s,b)=>s+ +b[2],0).toLocaleString('id-ID');}
-function removeItem(n){cart.splice(n,1);save();update();toast('Buku dihapus');} update(); $('cartBtn').onclick=()=>{$('cartPanel').classList.add('open');document.body.style.overflow='hidden'}; $('closeCart').onclick=()=>{$('cartPanel').classList.remove('open');document.body.style.overflow=''};
-$('searchBtn').onclick=()=>{$('searchPanel').classList.toggle('open');if($('searchPanel').classList.contains('open')){$('searchPanel').scrollIntoView({behavior:'smooth'});setTimeout(()=>$('searchInput').focus(),400)}};
-$('searchInput').oninput=e=>{const q=e.target.value.toLowerCase().trim();const results=books.filter(b=>b.join(' ').toLowerCase().includes(q));$('searchResults').innerHTML=q?results.map(b=>`<div class="result"><b>${b[0]}</b> — ${b[1]} — Rp${(+b[2]).toLocaleString('id-ID')}</div>`).join('')||'<p>Tidak ditemukan. Coba genre atau judul lain ♡</p>':'';};
-document.querySelectorAll('.genres button').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.genres button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const g=btn.dataset.genre;const filtered=books.filter(b=>b[1].toLowerCase()===g.toLowerCase());renderBooks(filtered.length?filtered:books);$('best').scrollIntoView({behavior:'smooth'});toast(filtered.length?`Genre ${g}`:`Belum ada koleksi ${g}, coba yang lain ♡`);});
-$('language').onchange=e=>{const en=e.target.value==='en';$('heroText').textContent=en?'Discover fiction, hidden gems, and stories that feel like home.':'Temukan novel fiksi, hidden gem, dan cerita yang terasa seperti rumah.';$('heroTitle').innerHTML=en?'Find your world,<br><em>find your story.</em>':'Cari duniamu,<br><em>temukan ceritamu.</em>';};
-$('checkoutBtn').onclick=()=>{if(!cart.length){toast('Keranjang masih kosong ♡');return}const items=cart.map(b=>`• ${b[0]} — Rp${(+b[2]).toLocaleString('id-ID')}`).join('%0A');const total=cart.reduce((s,b)=>s+ +b[2],0).toLocaleString('id-ID');const url=`https://wa.me/6281234567890?text=Halo%20KlinikPustaka%2C%20saya%20ingin%20memesan%3A%0A${items}%0A%0ATotal%3A%20Rp${total}`;window.open(url,'_blank');};
+
+const $ = id => document.getElementById(id);
+const slider = $('slider');
+let cart = JSON.parse(localStorage.getItem('kpCart') || '[]');
+
+function renderBooks(list = books) {
+  slider.innerHTML = list.map((b, n) => `
+    <article class="card">
+      <img 
+        class="cover" 
+        src="${b[3]}" 
+        alt="${b[0]}" 
+        loading="lazy"
+      >
+      <h3>${b[0]}</h3>
+      <p>${b[1]} · ⭐ 4.9</p>
+      <span class="price">
+        <b>Rp${(+b[2]).toLocaleString('id-ID')}</b>
+      </span>
+      <button class="buy" onclick="add(${books.indexOf(b)})">
+        Tambah ke Keranjang
+      </button>
+    </article>
+  `).join('');
+}
+
+renderBooks();
+
+$('next').onclick = () => {
+  slider.scrollBy({
+    left: 260,
+    behavior: 'smooth'
+  });
+};
+
+$('prev').onclick = () => {
+  slider.scrollBy({
+    left: -260,
+    behavior: 'smooth'
+  });
+};
+
+let auto = setInterval(() => $('next').click(), 4500);
+
+slider.addEventListener('mouseenter', () => clearInterval(auto));
+
+slider.addEventListener('mouseleave', () => {
+  auto = setInterval(() => $('next').click(), 4500);
+});
+
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+
+  setTimeout(() => {
+    t.classList.remove('show');
+  }, 1800);
+}
+
+function add(n) {
+  cart.push(books[n]);
+  save();
+  update();
+  toast('♡ Buku ditambahkan ke keranjang');
+}
+
+function save() {
+  localStorage.setItem('kpCart', JSON.stringify(cart));
+}
+
+function update() {
+  $('cartCount').textContent = cart.length;
+
+  $('cartItems').innerHTML =
+    cart.map((b, n) => `
+      <div class="cartrow">
+        <b>${b[0]}</b>
+        <span class="qty">
+          ${b[1]} · Rp${(+b[2]).toLocaleString('id-ID')}
+        </span>
+        <button onclick="removeItem(${n})">×</button>
+      </div>
+    `).join('') ||
+    '<p>Belum ada buku. Yuk cari cerita baru ♡</p>';
+
+  $('cartTotal').textContent =
+    'Rp' +
+    cart
+      .reduce((s, b) => s + +b[2], 0)
+      .toLocaleString('id-ID');
+}
+
+function removeItem(n) {
+  cart.splice(n, 1);
+  save();
+  update();
+  toast('Buku dihapus');
+}
+
+update();
+
+$('cartBtn').onclick = () => {
+  $('cartPanel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+$('closeCart').onclick = () => {
+  $('cartPanel').classList.remove('open');
+  document.body.style.overflow = '';
+};
+
+$('searchBtn').onclick = () => {
+  $('searchPanel').classList.toggle('open');
+
+  if ($('searchPanel').classList.contains('open')) {
+    $('searchPanel').scrollIntoView({
+      behavior: 'smooth'
+    });
+
+    setTimeout(() => {
+      $('searchInput').focus();
+    }, 400);
+  }
+};
+
+$('searchInput').oninput = e => {
+  const q = e.target.value.toLowerCase().trim();
+
+  const results = books.filter(b =>
+    b.join(' ').toLowerCase().includes(q)
+  );
+
+  $('searchResults').innerHTML = q
+    ? results.map(b => `
+        <div class="result">
+          <b>${b[0]}</b> — ${b[1]} — Rp${(+b[2]).toLocaleString('id-ID')}
+        </div>
+      `).join('') ||
+      '<p>Tidak ditemukan. Coba genre atau judul lain ♡</p>'
+    : '';
+};
+
+document.querySelectorAll('.genres button').forEach(btn => {
+  btn.onclick = () => {
+    document
+      .querySelectorAll('.genres button')
+      .forEach(x => x.classList.remove('active'));
+
+    btn.classList.add('active');
+
+    const g = btn.dataset.genre;
+
+    const filtered = books.filter(
+      b => b[1].toLowerCase() === g.toLowerCase()
+    );
+
+    renderBooks(filtered.length ? filtered : books);
+
+    $('best').scrollIntoView({
+      behavior: 'smooth'
+    });
+
+    toast(
+      filtered.length
+        ? `Genre ${g}`
+        : `Belum ada koleksi ${g}, coba yang lain ♡`
+    );
+  };
+});
+
+$('language').onchange = e => {
+  const en = e.target.value === 'en';
+
+  $('heroText').textContent = en
+    ? 'Discover fiction, hidden gems, and stories that feel like home.'
+    : 'Temukan novel fiksi, hidden gem, dan cerita yang terasa seperti rumah.';
+
+  $('heroTitle').innerHTML = en
+    ? 'Find your world,<br><em>find your story.</em>'
+    : 'Cari duniamu,<br><em>temukan ceritamu.</em>';
+};
+
+$('checkoutBtn').onclick = () => {
+  if (!cart.length) {
+    toast('Keranjang masih kosong ♡');
+    return;
+  }
+
+  const items = cart
+    .map(
+      b =>
+        `• ${b[0]} — Rp${(+b[2]).toLocaleString('id-ID')}`
+    )
+    .join('%0A');
+
+  const total = cart
+    .reduce((s, b) => s + +b[2], 0)
+    .toLocaleString('id-ID');
+
+  const url =
+    `https://wa.me/6281234567890?text=` +
+    `Halo%20KlinikPustaka%2C%20saya%20ingin%20memesan%3A%0A` +
+    `${items}%0A%0A` +
+    `Total%3A%20Rp${total}`;
+
+  window.open(url, '_blank');
+};
