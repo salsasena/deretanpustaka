@@ -1,10 +1,10 @@
 const books = [
-  ['Kita Pergi Hari Ini', 'Slice of Life', '89000', 'images/Kita_Pergi_Hari_Ini.jpg'],
-  ['Perempuan di Titik Nol', 'Classic', '119000', 'images/Perempuan_di_Titik_Nol.jpg'],
-  ['Hello, Cello!', 'Romance', '125000', 'images/Hello_Cello.jpg'],
-  ['Autumn in Paris', 'Romance', '139000', 'images/Autumn_in_Paris.jpg'],
-  ['Surat Untuk Jenaka', 'Romance', '129000', 'images/Surat_Untuk_Jenaka.jpg'],
-  ['Cantik Itu Luka', 'Classic', '149000', 'images/Cantik_Itu_Luka.jpg']
+  ['Kita Pergi Hari Ini', 'Slice of Life', '89000', 'Kita_Pergi_Hari_Ini.jpg'],
+  ['Perempuan di Titik Nol', 'Classic', '119000', 'Perempuan_di_Titik_Nol.jpg'],
+  ['Hello, Cello!', 'Romance', '125000', 'Hello_Cello.jpg'],
+  ['Autumn in Paris', 'Romance', '139000', 'Autumn_in_Paris.jpg'],
+  ['Surat Untuk Jenaka', 'Romance', '129000', 'Surat_Untuk_Jenaka.jpg'],
+  ['Cantik Itu Luka', 'Classic', '149000', 'Cantik_Itu_Luka.jpg']
 ];
 
 const $ = id => document.getElementById(id);
