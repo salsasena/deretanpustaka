@@ -2,7 +2,7 @@
    KlinikPustaka — Dynamic Version (Google Sheets + Apps Script)
    ========================================================= */
 
-const API_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'; // ← GANTI INI
+const API_URL = 'https://script.google.com/a/macros/sma.belajar.id/s/AKfycbw24lJ4CDvQJ4ZvBKf2J3ZQ71Bv7e67PGVBIZxSABvswHwCvL6EB8iVBjlC0skxX_jOuQ/exec'; // 
 
 // Fallback data (jika API gagal / belum di-set)
 const FALLBACK_BOOKS = [
